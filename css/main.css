@@ -1,0 +1,32 @@
+body {
+	font-family: verdana, arial;
+}
+
+label {
+	font-weight: bold;
+	width: 125px;
+	padding-right: 20px;	
+	text-align: left;
+	display:inline-block
+}
+
+.value {
+	text-align: left;
+	width:300px;
+}
+.content {
+	border: 1px solid #dddddd;
+	margin: auto;
+
+}
+.content-line {
+	padding: 10px;
+}
+
+.content-header {
+	font-weight: bold;
+	background-color: #006699;
+	color: #ffffff;
+	padding: 10px;
+	text-align: left;
+}
