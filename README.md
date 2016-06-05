@@ -6,4 +6,5 @@ The goal is the have a local web server that can be called by a SIEM as a workfl
 SIEM --> sbws --> sbserver --> [sb data]
 
 # Requirements
-Go and sbserver
+* Go
+* sbserver
