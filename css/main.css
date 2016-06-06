@@ -4,15 +4,29 @@ body {
 
 label {
 	font-weight: bold;
-	width: 125px;
+	width: 200px;
 	padding-right: 20px;	
 	text-align: left;
 	display:inline-block
 }
 
-.value {
+.SAFE {
 	text-align: left;
 	width:300px;
+	background-color: #0d0;
+	padding: 10px;
+	color: #fff;
+	font-weight: bold;
+}
+
+
+.UNSAFE {
+	text-align: left;
+	width:300px;
+	background-color: #f00;
+	padding: 10px;
+	color: #fff;
+	font-weight: bold;
 }
 .content {
 	border: 1px solid #dddddd;
