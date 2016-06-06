@@ -1,7 +1,7 @@
 # Safebrowsing Interstitial Web Server
 Safebrowsing Interstitial Web Server (in development) written in Go
 
-The goal is the have a local web server that can be called by a SIEM as a workflow process, which would then call the sbserver to get an opinion on a URL.  This was created because there are CORS issues with attempting to call the local SB server directly from the SIEM. This serves as an intermediary which would not have same CORS issue since both it and sbserver are running locally. This also avoids having to modify the sbserver to add CORS headers, or to have it redirect to a site that it thinks is SAFE but perhaps is not but just isn't catalogued by SB (eek!).
+The goal is the have a local web server that can be called by a SIEM as a workflow process, which would then call the sbserver to get an opinion on a URL.  This was created because there are CORS issues with attempting to call the local SB server directly from the SIEM. This serves as an intermediary which would not have same CORS issue since both it and sbserver are running locally. This also avoids having to modify the sbserver to add CORS headers, or redirecting the analyst/user to a site that it thinks is SAFE but perhaps is not - SB just isn't aware of it (eek!).
 
 SIEM --> sbiws --> sbserver --> [sb data]
 
