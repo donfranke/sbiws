@@ -73,6 +73,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
     }
     
     // empty response means no matches means Safebrowser thinks it's safe
+    // we're expecting only 1 response so not iterating the Matches array
     if(len([]byte(body))>2) {
         // build display object
         dis.ThreatType=res.Matches[0].ThreatType
