@@ -1,7 +1,11 @@
-// This is a web server that handles individual safe browsing requests
+// This is an "interstitial" eb server that handles individual Google Safebrowsing requests;
+//   it's a proxy for the proxy
 // It was created for use with SIEM (e.g. Splunk) workflow lookups, so that an analyst
-//  can click a proxy domain/destination host and select SafeBrowsing to
-//  view the Google SafeBrowsing opinion of the domain
+//   can click a proxy domain/destination host and select SafeBrowsing to
+//   view the Google SafeBrowsing opinion of the domain
+
+// Request flow: SIEM -- workflow item --> SBWS --> sbserver --> [data]
+
 package main
 
 import (
@@ -24,10 +28,12 @@ type Display struct {
     ThreatEntryType string 
 }
 
+// response from sbserver POST request
 type Results struct {
     Matches []Match     
 }
 
+// nested within sbserver response
 type Match struct {
     ThreatType string 
     PlatformType string 
@@ -44,13 +50,13 @@ func handler(w http.ResponseWriter, r *http.Request) {
 
     // create page content model
     var dis Display
-    // get opinion from sbserver
+    
+    // send JSON request to sbserver
     sbURL := "http://localhost:8080/v4/threatMatches:find"
     jsonSend := "{\"threatInfo\":{\"threatEntries\": [{\"url\":\"" + URL + "apiv4/ANY_PLATFORM/MALWARE/URL/\"}]}}"
     jsonBytes := []byte(jsonSend)
     req, err := http.NewRequest("POST", sbURL, bytes.NewBuffer(jsonBytes))
     req.Header.Set("Content-Type", "application/json")
-
     client := &http.Client{}
     resp, err := client.Do(req)
     if err != nil {
@@ -58,15 +64,15 @@ func handler(w http.ResponseWriter, r *http.Request) {
     }
     defer resp.Body.Close()
 
-    body, _ := ioutil.ReadAll(resp.Body)
-    
+    // process JSON response
+    body, _ := ioutil.ReadAll(resp.Body)    
     res := &Results{}
     err = json.Unmarshal([]byte(body), res)
     if(err!=nil) {
         log.Fatal(err)
     }
     
-    // no results means no matches means its safe (per Safebrowser)
+    // empty response means no matches means Safebrowser thinks it's safe
     if(len([]byte(body))>2) {
         // build display object
         dis.ThreatType=res.Matches[0].ThreatType
@@ -81,7 +87,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
     }
     dis.URL = URL
 
-    // render page
+    // render web page
     var indexTemplate = template.Must(template.ParseFiles("display.tmpl"))
     if err := indexTemplate.Execute(w, dis); err != nil {
         log.Fatal(err)
@@ -100,11 +106,11 @@ func defaultHandler(w http.ResponseWriter, r *http.Request) {
 // start web server and listen for requests
 func main() {   
     // get startup params
-    port := flag.String("p","","Provide a port for web server to use")
+    port := flag.String("p","","Provide a port for web server to use. Must be different than port used by bserver.")
     flag.Parse()
     webport := *port
     if(port==nil||webport=="") {
-        log.Fatal("Need to provide a port...exiting!")
+        log.Fatal("Usage: ./sbws -p=[port number]")
     }
     
     // create web server handlers
@@ -112,7 +118,7 @@ func main() {
     http.HandleFunc("/r", handler)
     http.HandleFunc("/", defaultHandler)
 
-    // start web server
+    // start the web server
     fmt.Printf("Web server at port %s\n",webport)
     fmt.Println(http.ListenAndServe(":"+webport, nil))
 }
