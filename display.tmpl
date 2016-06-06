@@ -1,19 +1,31 @@
-<html>
+<!DOCTYPE html>
   <head>
-    <title>Safe Browsing Evaluation</title>    
+	<title>Safe Browsing Evaluation</title> 
+	<link href="/css/main.css" rel="stylesheet">
 
-    <link href="/css/main.css" rel="stylesheet">
-
-  </head>
-  <body>
-<div class="content">
-<div class="content-header">Safe Browsing Results</div>
-<div class="content-line">
-	<label>URL</label><span class="value">{{ .URL }}</span>
-</div>
-<div class="content-line"><label>Opinion</label><span class="{{ .Opinion }}">{{ .Opinion }}</span></div>
-<div class="content-line"><label>Threat Type</label><span class="value">{{ .ThreatType }}</span></div>
-<div class="content-line"><label>Platform Type</label><span class="value">{{ .PlatformType }}</span></div>
-<div class="content-line"><label>Threat Entry Type</label><span class="value">{{ .ThreatEntryType }}</span></div>
-</body>
+	</head>
+	<body>
+		<div class="content">
+			<div class="content-header">Safe Browsing Results</div>
+			<div class="content-line">
+				<label>URL</label><span class="value">{{ .URL }}</span>
+			</div>
+			<div class="content-line">
+				<label>Opinion</label>
+				<span class="{{ .Opinion }}">{{ .Opinion }}</span>
+			</div>
+			<div class="content-line">
+				<label>Threat Type</label>
+				<span class="value">{{ .ThreatType }}</span>
+			</div>
+			<div class="content-line">
+				<label>Platform Type</label>
+				<span class="value">{{ .PlatformType }}</span>
+			</div>
+			<div class="content-line">
+				<label>Threat Entry Type</label>
+				<span class="value">{{ .ThreatEntryType }}</span>
+			</div>
+		</div>
+	</body>
 </html>

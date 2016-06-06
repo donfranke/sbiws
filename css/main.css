@@ -1,7 +1,6 @@
 body {
 	font-family: verdana, arial;
 }
-
 label {
 	font-weight: bold;
 	width: 200px;
@@ -9,7 +8,6 @@ label {
 	text-align: left;
 	display:inline-block
 }
-
 .SAFE {
 	text-align: left;
 	width:300px;
@@ -18,8 +16,6 @@ label {
 	color: #fff;
 	font-weight: bold;
 }
-
-
 .UNSAFE {
 	text-align: left;
 	width:300px;

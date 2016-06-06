@@ -119,7 +119,7 @@ func main() {
     http.HandleFunc("/", defaultHandler)
 
     // start the web server
-    fmt.Printf("Web server at port %s\n",webport)
+    fmt.Printf("Safebrowsing Interstitial Web Server (SBWS) now listening to port %s\n",webport)
     fmt.Println(http.ListenAndServe(":"+webport, nil))
 }
 
