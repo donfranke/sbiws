@@ -13,4 +13,4 @@ Note: port number used by sbiws must be different than port used by sbserver, si
 
 # Requirements
 * Go
-* Safebrowsing v4 sbserver
+* Safebrowsing v4 sbserver running locally
